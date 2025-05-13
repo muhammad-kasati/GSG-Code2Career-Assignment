@@ -1,8 +1,14 @@
+const CHUNK = 10;
 let allQuotes = [];
+let filteredQuotes = [];
+let renderedCount = CHUNK;
+
 const listEl = document.getElementById('quotes-list');
 const filterInput = document.getElementById('filter');
 const errorEl = document.getElementById('error');
+const showMoreBtn = document.getElementById('show-more');
 
+// Fetch once on load
 fetch('https://dummyjson.com/quotes')
   .then(res => {
     if (!res.ok) throw new Error(res.statusText);
@@ -10,28 +16,50 @@ fetch('https://dummyjson.com/quotes')
   })
   .then(data => {
     allQuotes = data.quotes;
-    render(allQuotes);
+    applyFilter();  
   })
   .catch(err => {
     errorEl.textContent = 'Failed to load quotes: ' + err.message;
   });
 
-function render(quotes) {
+// Render up to `renderedCount` items from filteredQuotes
+function render() {
   listEl.innerHTML = '';
-  if (quotes.length === 0) {
+  const slice = filteredQuotes.slice(0, renderedCount);
+
+  if (slice.length === 0) {
     listEl.innerHTML = `<li class="empty">No quotes match your search.</li>`;
-    return;
+  } else {
+    const frag = document.createDocumentFragment();
+    slice.forEach(q => {
+      const li = document.createElement('li');
+      li.textContent = q.quote;
+      frag.appendChild(li);
+    });
+    listEl.appendChild(frag);
   }
-  const frag = document.createDocumentFragment();
-  quotes.forEach(q => {
-    const li = document.createElement('li');
-    li.textContent = q.quote;
-    frag.appendChild(li);
-  });
-  listEl.appendChild(frag);
+
+  // Show or hide "Show More" button
+  if (renderedCount < filteredQuotes.length) {
+    showMoreBtn.style.display = 'block';
+  } else {
+    showMoreBtn.style.display = 'none';
+  }
 }
 
-filterInput.addEventListener('input', () => {
+// Update filteredQuotes based on input and reset pagination
+function applyFilter() {
   const q = filterInput.value.trim().toLowerCase();
-  render(allQuotes.filter(x => x.quote.toLowerCase().includes(q)));
+  filteredQuotes = allQuotes.filter(x =>
+    x.quote.toLowerCase().includes(q)
+  );
+  renderedCount = CHUNK;
+  render();
+}
+
+filterInput.addEventListener('input', applyFilter);
+
+showMoreBtn.addEventListener('click', () => {
+  renderedCount += CHUNK;
+  render();
 });
