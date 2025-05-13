@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quote Search Filter</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+    <h1>Search Quotes</h1>
+    <input
+      type="text"
+      id="filter"
+      placeholder="Type to filter quotes…"
+      aria-label="Filter quotes by text"
+    />
+
+    <ul id="quotes-list">
+      <!-- Quotes will be injected here -->
+    </ul>
+
+    <div id="error" role="alert"></div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
