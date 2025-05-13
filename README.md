@@ -2,7 +2,7 @@
 
 > **Assignment for GSG**
 
-A simple HTML/JavaScript application that fetches quotes from the DummyJSON API and lets users filter them in real time. I
+A simple HTML/JavaScript application that fetches quotes from the DummyJSON API and lets users filter them in real time.
 
 ---
 
