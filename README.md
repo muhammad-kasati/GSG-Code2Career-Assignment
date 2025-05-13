@@ -22,7 +22,7 @@ A simple HTML/JavaScript application that fetches quotes from the DummyJSON API 
 
 ## 🎬 Demo
 
-![filter-demo](https://muhammad-kasati.github.io/GSG-Code2Career-Assignment/)  
+[Live Demo](https://muhammad-kasati.github.io/GSG-Code2Career-Assignment/)
 
 ---
 
